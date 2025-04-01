@@ -52,6 +52,44 @@ export class IntermediateStrategy {
     return Math.random() < challengeProbability;
   }
 
+
+   /**
+   * Chooses a strategic value to bluff for intermediate bots
+   */
+  chooseStrategicBluffValue(actualValue, gameState, botCards, memory) {
+    const cardValues = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+
+    // Try to choose a value close to the actual value to be more believable
+    const actualIndex = cardValues.indexOf(actualValue);
+
+    if (actualIndex !== -1) {
+      // Choose a value 1-2 steps away from actual value
+      const offset = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
+      const targetIndex = Math.max(0, Math.min(cardValues.length - 1, actualIndex + offset));
+      return cardValues[targetIndex];
+    }
+
+    // Fallback to random value
+    return cardValues[Math.floor(Math.random() * cardValues.length)];
+  }
+
+  /**
+   * Groups cards by their value
+   */
+  groupCardsByValue(cards) {
+    const groups = {};
+
+    for (const card of cards) {
+      if (!groups[card.value]) {
+        groups[card.value] = [];
+      }
+      groups[card.value].push(card);
+    }
+
+    return groups;
+  }
+}
+
   /**
    * Selects cards to play with intermediate strategy
    */
@@ -143,39 +181,4 @@ export class IntermediateStrategy {
     };
   }
 
-  /**
-   * Chooses a strategic value to bluff for intermediate bots
-   */
-  chooseStrategicBluffValue(actualValue, gameState, botCards, memory) {
-    const cardValues = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-
-    // Try to choose a value close to the actual value to be more believable
-    const actualIndex = cardValues.indexOf(actualValue);
-
-    if (actualIndex !== -1) {
-      // Choose a value 1-2 steps away from actual value
-      const offset = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
-      const targetIndex = Math.max(0, Math.min(cardValues.length - 1, actualIndex + offset));
-      return cardValues[targetIndex];
-    }
-
-    // Fallback to random value
-    return cardValues[Math.floor(Math.random() * cardValues.length)];
-  }
-
-  /**
-   * Groups cards by their value
-   */
-  groupCardsByValue(cards) {
-    const groups = {};
-
-    for (const card of cards) {
-      if (!groups[card.value]) {
-        groups[card.value] = [];
-      }
-      groups[card.value].push(card);
-    }
-
-    return groups;
-  }
-}
+ 
