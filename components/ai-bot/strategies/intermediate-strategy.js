@@ -1,6 +1,7 @@
 export class IntermediateStrategy {
-  constructor(personality) {
+  constructor(personality,memorySystem) {
     this.personality = personality;
+     this.memorySystem = memorySystem;
   }
 
   /**
