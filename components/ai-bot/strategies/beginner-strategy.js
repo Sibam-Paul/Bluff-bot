@@ -34,6 +34,44 @@ export class BeginnerStrategy {
     return false;
   }
 
+    /**
+   * Groups cards by their value
+   */
+  groupCardsByValue(cards) {
+    const groups = {};
+
+    for (const card of cards) {
+      if (!groups[card.value]) {
+        groups[card.value] = [];
+      }
+      groups[card.value].push(card);
+    }
+
+    return groups;
+  }
+
+  /**
+   * Gets the farthest card in the future
+   */
+  getFarthestCard(cards, currentRank) {
+    const rankOrder = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+    const currentIndex = rankOrder.indexOf(currentRank);
+    let farthestCard = null;
+    let maxDistance = -1;
+
+    for (const card of cards) {
+      const cardIndex = rankOrder.indexOf(card.value);
+      const distance = (cardIndex - currentIndex + rankOrder.length) % rankOrder.length;
+      if (distance > maxDistance) {
+        maxDistance = distance;
+        farthestCard = card;
+      }
+    }
+
+    return farthestCard;
+  }
+}
+
   /**
    * Selects cards to play with simple strategy
    */
@@ -75,40 +113,3 @@ export class BeginnerStrategy {
     };
   }
 
-  /**
-   * Groups cards by their value
-   */
-  groupCardsByValue(cards) {
-    const groups = {};
-
-    for (const card of cards) {
-      if (!groups[card.value]) {
-        groups[card.value] = [];
-      }
-      groups[card.value].push(card);
-    }
-
-    return groups;
-  }
-
-  /**
-   * Gets the farthest card in the future
-   */
-  getFarthestCard(cards, currentRank) {
-    const rankOrder = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-    const currentIndex = rankOrder.indexOf(currentRank);
-    let farthestCard = null;
-    let maxDistance = -1;
-
-    for (const card of cards) {
-      const cardIndex = rankOrder.indexOf(card.value);
-      const distance = (cardIndex - currentIndex + rankOrder.length) % rankOrder.length;
-      if (distance > maxDistance) {
-        maxDistance = distance;
-        farthestCard = card;
-      }
-    }
-
-    return farthestCard;
-  }
-}
