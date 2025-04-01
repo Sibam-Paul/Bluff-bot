@@ -11,7 +11,7 @@ export class BeginnerStrategy {
   /**
    * Decides whether to challenge based on simple heuristics
    */
-  decideChallenge(gameState, botCards, memory) {
+  decideChallenge(gameState, botCards) {
     const lastAction = gameState.lastAction;
     if (!lastAction || lastAction.type !== "place") return false;
 
@@ -37,7 +37,7 @@ export class BeginnerStrategy {
   /**
    * Selects cards to play with simple strategy
    */
-  selectCardsAndBluff(gameState, botCards, memory) {
+  selectCardsAndBluff(gameState, botCards) {
     const lastPlayedValue = gameState.lastAction?.bluffText || null;
 
     // Group cards by value
