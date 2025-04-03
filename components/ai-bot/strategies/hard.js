@@ -1,4 +1,4 @@
-// strategies/hard.js
+// Simplified Level 3 ALgo
 const hardStrategy = {
   makeMove: (gameState) => {
     const { previousMoves, possibleMoves, opponentBluffPatterns } = gameState
